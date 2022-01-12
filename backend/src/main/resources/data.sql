@@ -51,3 +51,6 @@ INSERT INTO tb_task(id, description, question_count, approval_count, weight, due
 INSERT INTO tb_lessons_done(lesson_id, user_id, offer_id) VALUES(1, 1, 1);
 INSERT INTO tb_lessons_done(lesson_id, user_id, offer_id) VALUES(2, 1, 1);
 
+/* DELIVER */
+INSERT INTO tb_deliver(uri, moment, status, feedback, correct_count, lesson_id, user_id, offer_id) VALUES('https://github.com/fabriciofa/dslearn', TIMESTAMP WITH TIME ZONE '2020-12-10T10:00:00Z', 0, null, null, 4, 1, 1);
+
