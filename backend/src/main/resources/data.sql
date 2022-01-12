@@ -54,3 +54,7 @@ INSERT INTO tb_lessons_done(lesson_id, user_id, offer_id) VALUES(2, 1, 1);
 /* DELIVER */
 INSERT INTO tb_deliver(uri, moment, status, feedback, correct_count, lesson_id, user_id, offer_id) VALUES('https://github.com/fabriciofa/dslearn', TIMESTAMP WITH TIME ZONE '2020-12-10T10:00:00Z', 0, null, null, 4, 1, 1);
 
+/* NOTIFICATION */
+INSERT INTO tb_notification(text, moment, read, route, user_id) VALUES('Primeiro feedback de tarefa: favor revisar', TIMESTAMP WITH TIME ZONE '2020-12-10T10:00:00Z', true, '/offers/1/resource/1/sections/1', 1);
+INSERT INTO tb_notification(text, moment, read, route, user_id) VALUES('Segundo feedback de tarefa: favor revisar', TIMESTAMP WITH TIME ZONE '2020-12-13T11:00:00Z', true, '/offers/1/resource/1/sections/1', 1);
+INSERT INTO tb_notification(text, moment, read, route, user_id) VALUES('Terceiro feedback de tarefa: favor revisar', TIMESTAMP WITH TIME ZONE '2020-12-14T12:00:00Z', true, '/offers/1/resource/1/sections/1', 1);
