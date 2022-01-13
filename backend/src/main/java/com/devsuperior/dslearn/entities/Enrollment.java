@@ -101,6 +101,10 @@ public class Enrollment implements Serializable {
 		this.onlyUpdate = onlyUpdate;
 	}
 
+	public List<Deliver> getDeliveries() {
+		return deliveries;
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
