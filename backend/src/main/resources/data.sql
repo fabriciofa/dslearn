@@ -70,3 +70,10 @@ INSERT INTO tb_topic(title, body, moment, author_id, offer_id, lesson_id) VALUES
 /* TOPIC LIKES */
 INSERT INTO tb_topic_likes(topic_id, user_id) VALUES(1, 2);
 INSERT INTO tb_topic_likes(topic_id, user_id) VALUES(2, 1);
+
+/* REPLY */
+INSERT INTO tb_reply(body, moment, author_id, topic_id) VALUES('Tente reiniciar o computador', TIMESTAMP WITH TIME ZONE '2020-12-15T13:00:00Z', 1, 2);
+INSERT INTO tb_reply(body, moment, author_id, topic_id) VALUES('Deu certo, valeu!!', TIMESTAMP WITH TIME ZONE '2020-12-20T13:00:00Z', 1, 1);
+
+/* REPLY LIKES */
+INSERT INTO tb_reply_likes(reply_id, user_id) VALUES(1, 1);
