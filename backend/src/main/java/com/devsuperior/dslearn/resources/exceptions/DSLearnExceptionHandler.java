@@ -12,13 +12,15 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.devsuperior.dslearn.services.exceptions.DatabaseException;
+import com.devsuperior.dslearn.services.exceptions.ForbiddenException;
 import com.devsuperior.dslearn.services.exceptions.ResourceNotFoundException;
+import com.devsuperior.dslearn.services.exceptions.UnauthorizedException;
 
 @ControllerAdvice
 public class DSLearnExceptionHandler {
 	
 	@ExceptionHandler(ResourceNotFoundException.class)
-	private ResponseEntity<StandardError> entityNotFound(ResourceNotFoundException e, HttpServletRequest request) {
+	public ResponseEntity<StandardError> entityNotFound(ResourceNotFoundException e, HttpServletRequest request) {
 		HttpStatus status = HttpStatus.NOT_FOUND;
 		StandardError err = new StandardError();
 		err.setTimestamp(Instant.now());
@@ -30,7 +32,7 @@ public class DSLearnExceptionHandler {
 	}
 	
 	@ExceptionHandler(DatabaseException.class)
-	private ResponseEntity<StandardError> database(DatabaseException e, HttpServletRequest request) {
+	public ResponseEntity<StandardError> database(DatabaseException e, HttpServletRequest request) {
 		HttpStatus status = HttpStatus.BAD_REQUEST;
 		StandardError err = new StandardError();
 		err.setTimestamp(Instant.now());
@@ -42,7 +44,7 @@ public class DSLearnExceptionHandler {
 	}
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	private ResponseEntity<ValidationError> validation(MethodArgumentNotValidException e, HttpServletRequest request) {
+	public ResponseEntity<ValidationError> validation(MethodArgumentNotValidException e, HttpServletRequest request) {
 		HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
 		ValidationError err = new ValidationError();
 		err.setTimestamp(Instant.now());
@@ -54,5 +56,17 @@ public class DSLearnExceptionHandler {
 			err.addErrors(f.getField(), f.getDefaultMessage());
 		}
 		return ResponseEntity.status(status).body(err);
+	}
+	
+	@ExceptionHandler(ForbiddenException.class)
+	public ResponseEntity<OAuthCustomError> forbidden(ForbiddenException e, HttpServletRequest request) {
+		OAuthCustomError err = new OAuthCustomError("Forbidden", e.getMessage());
+		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(err);
+	}
+	
+	@ExceptionHandler(UnauthorizedException.class)
+	public ResponseEntity<OAuthCustomError> unauthozired(UnauthorizedException e, HttpServletRequest request) {
+		OAuthCustomError err = new OAuthCustomError("Unauthozired", e.getMessage());
+		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(err);
 	}
 }

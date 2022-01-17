@@ -1,4 +1,4 @@
-package com.devsuperior.dslearn.services.exceptions;
+package com.devsuperior.dslearn.services;
 
 import java.util.Optional;
 
@@ -13,20 +13,25 @@ import org.springframework.stereotype.Service;
 import com.devsuperior.dslearn.dto.UserDTO;
 import com.devsuperior.dslearn.entities.User;
 import com.devsuperior.dslearn.repositories.UserRepository;
+import com.devsuperior.dslearn.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class UserService implements UserDetailsService {
 	private Logger logger = LoggerFactory.getLogger(UserService.class);
-	
+
 	@Autowired
 	private UserRepository userRepository;
 
+	@Autowired
+	private AuthService authService;
+
 	public UserDTO findById(Long id) {
+		authService.validateSelfOrAdmin(id);
 		Optional<User> obj = userRepository.findById(id);
-		User entity = obj.orElseThrow(() -> new ResourceNotFoundException("Id Not Found")); 
+		User entity = obj.orElseThrow(() -> new ResourceNotFoundException("Id Not Found"));
 		return new UserDTO(entity);
 	}
-	
+
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = userRepository.findByEmail(username);
@@ -36,5 +41,4 @@ public class UserService implements UserDetailsService {
 		logger.info("Username Found: " + user.getUsername());
 		return user;
 	}
-	
 }
